@@ -6,8 +6,7 @@ Final project - connection part
 ```
 make:
     gcc server.o -o server -lpthread
-	gcc snaklient.o -o snaklient -lpthread
-
+    gcc snaklient.o -o snaklient -lpthread
 ```
 # Run
 For server:
