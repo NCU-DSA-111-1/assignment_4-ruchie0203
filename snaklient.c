@@ -50,7 +50,7 @@ typedef struct client_message{
 int snakeXY1[2][SNAKE_ARRAY_SIZE], snakeXY2[2][SNAKE_ARRAY_SIZE];; //Two Dimensional Array, the first array is for the X coordinates and the second array for the Y coordinates
 int snakeLength1 = 4, snakeLength2 = 4; //Starting Length
 int direction1 = LEFT1; //DO NOT CHANGE THIS TO RIGHT ARROW, THE GAME WILL INSTANTLY BE OVER IF YOU DO!!! <- Unless the prepareSnakeArray function is changed to take into account the direction....
-int recv_direction1=0;
+int recv_direction1= LEFT1;
 int direction2 = LEFT2;
 int two_direction;
 int foodXY1[2], foodXY2[2];
@@ -76,7 +76,7 @@ void *receive(void *arg){
     while(1){
         
         ret = recvfrom(socketFD,&cmsg,size,0,(struct sockaddr*)&recv_addr,&recvlen);
-        if(ret>=0){ // receive successfully
+        if(ret>=0 && cmsg.direction != 0){ // receive successfully
             if(cmsg.client_num==1){
                 recv_direction1 = cmsg.direction;
                 canChangeDirection1=1;
@@ -688,6 +688,7 @@ void startGame1( int snakeXY1[][SNAKE_ARRAY_SIZE], int foodXY1[], int foodXY2[],
     int waittime1 = 180000;  //Sets the correct wait time according to the selected speed
     int tempScore1 = 10 * speed1;
     int oldDirection1;
+    direction1 = LEFT1;
     endWait1 = clock() + waittime1;
     while (gameOver1==0){
         checkKeysPressed1();
@@ -745,6 +746,7 @@ void startGame1( int snakeXY1[][SNAKE_ARRAY_SIZE], int foodXY1[], int foodXY2[],
         // printf("\n");
         //     refreshInfoBar2();
         // }
+        gotoxy(1,40);
         break;
     case 2:
         gotoxy(69,19);
