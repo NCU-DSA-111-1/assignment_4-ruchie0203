@@ -26,6 +26,8 @@ For client(player):
 
 4. The client will send the message with direction message and the server send it to all clients(if there are multiple clients) to make the specific snake change the direction.
 
+5. In this version, **you must enter any direction at the beginning** or the game will be end soon!
+
 # Bugs
 1. Can't change the direction properly while the sending and receiving part have no problem (I thought).
 

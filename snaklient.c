@@ -138,48 +138,49 @@ void checkKeysPressed1()
         pressed1=getch();
         gotoxy(50,38);
         printf("pressed1: %d",pressed1);
-        if (pressed1 != direction1){
-            if(pressed1 == DOWN1 && direction1 != UP1){
-                send_direction1 = pressed1;
-                msg.FLAG = MESSAGE;
-                msg.client_num=myClientNum;
-                msg.direction=send_direction1;
-                sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
-                gotoxy(90,37);
-                printf("send_direction: %d", msg.direction);
-            }
-            else if (pressed1 == UP1 && direction1 != DOWN1){
-                send_direction1 = pressed1;
-                msg.FLAG = MESSAGE;
-                msg.client_num=myClientNum;
-                msg.direction=send_direction1;
-                sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
-                gotoxy(90,37);
-                printf("send_direction: %d", msg.direction);
-            }
-            else if (pressed1 == LEFT1 && direction1 != RIGHT1){
-                send_direction1 = pressed1;
-                msg.FLAG = MESSAGE;
-                msg.client_num=myClientNum;
-                msg.direction=send_direction1;
-                sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
-                gotoxy(90,37);
-                printf("send_direction: %d", msg.direction);
-            }
-            else if (pressed1 == RIGHT1 && direction1 != LEFT1){
-                send_direction1 = pressed1;
-                msg.FLAG = MESSAGE;
-                msg.client_num=myClientNum;
-                msg.direction=send_direction1;
-                sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
-                gotoxy(90,37);
-                printf("send_direction: %d", msg.direction);
-            }
-            // msg.FLAG = MESSAGE;
-            // msg.client_num=myClientNum;
+        if (pressed1 < 69 || pressed1 > 64 && pressed1 != direction1){
+            // if(pressed1 == DOWN1 && direction1 != UP1){
+            //     send_direction1 = pressed1;
+            //     msg.FLAG = MESSAGE;
+            //     msg.client_num=myClientNum;
+            //     msg.direction=send_direction1;
+            //     sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
+            //     gotoxy(90,37);
+            //     printf("send_direction: %d", msg.direction);
+            // }
+            // else if (pressed1 == UP1 && direction1 != DOWN1){
+            //     send_direction1 = pressed1;
+            //     msg.FLAG = MESSAGE;
+            //     msg.client_num=myClientNum;
+            //     msg.direction=send_direction1;
+            //     sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
+            //     gotoxy(90,37);
+            //     printf("send_direction: %d", msg.direction);
+            // }
+            // else if (pressed1 == LEFT1 && direction1 != RIGHT1){
+            //     send_direction1 = pressed1;
+            //     msg.FLAG = MESSAGE;
+            //     msg.client_num=myClientNum;
+            //     msg.direction=send_direction1;
+            //     sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
+            //     gotoxy(90,37);
+            //     printf("send_direction: %d", msg.direction);
+            // }
+            // else if (pressed1 == RIGHT1 && direction1 != LEFT1){
+            //     send_direction1 = pressed1;
+            //     msg.FLAG = MESSAGE;
+            //     msg.client_num=myClientNum;
+            //     msg.direction=send_direction1;
+            //     sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
+            //     gotoxy(90,37);
+            //     printf("send_direction: %d", msg.direction);
+            // }
+            msg.FLAG = MESSAGE;
+            msg.client_num=myClientNum;
+            msg.direction=pressed1;
             // if(send_direction1==91)
             //     send_direction1 = LEFT1;
-            // sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
+            sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
             
         }
     }
