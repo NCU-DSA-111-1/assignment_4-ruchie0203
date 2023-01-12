@@ -50,7 +50,6 @@ typedef struct client_message{
 int snakeXY1[2][SNAKE_ARRAY_SIZE], snakeXY2[2][SNAKE_ARRAY_SIZE];; //Two Dimensional Array, the first array is for the X coordinates and the second array for the Y coordinates
 int snakeLength1 = 4, snakeLength2 = 4; //Starting Length
 int direction1 = LEFT1; //DO NOT CHANGE THIS TO RIGHT ARROW, THE GAME WILL INSTANTLY BE OVER IF YOU DO!!! <- Unless the prepareSnakeArray function is changed to take into account the direction....
-int send_direction1=0;
 int recv_direction1=0;
 int direction2 = LEFT2;
 int two_direction;
@@ -133,55 +132,54 @@ char getch()
 void checkKeysPressed1()
 {
     int pressed1;
+    gotoxy(50,39);
+    printf("direction1:%d",direction1);
     //If a key has been pressed
     if(kbhit()){
         pressed1=getch();
         /* Can turn on to show the key input*/
-        // gotoxy(50,38);
-        // printf("pressed1: %d",pressed1);
+        gotoxy(50,38);
+        printf("pressed1: %d",pressed1);
+        
         if (pressed1 < 69 || pressed1 > 64 && pressed1 != direction1){
-            // if(pressed1 == DOWN1 && direction1 != UP1){
-            //     send_direction1 = pressed1;
-            //     msg.FLAG = MESSAGE;
-            //     msg.client_num=myClientNum;
-            //     msg.direction=send_direction1;
-            //     sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
-            //     gotoxy(90,37);
-            //     printf("send_direction: %d", msg.direction);
-            // }
-            // else if (pressed1 == UP1 && direction1 != DOWN1){
-            //     send_direction1 = pressed1;
-            //     msg.FLAG = MESSAGE;
-            //     msg.client_num=myClientNum;
-            //     msg.direction=send_direction1;
-            //     sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
-            //     gotoxy(90,37);
-            //     printf("send_direction: %d", msg.direction);
-            // }
-            // else if (pressed1 == LEFT1 && direction1 != RIGHT1){
-            //     send_direction1 = pressed1;
-            //     msg.FLAG = MESSAGE;
-            //     msg.client_num=myClientNum;
-            //     msg.direction=send_direction1;
-            //     sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
-            //     gotoxy(90,37);
-            //     printf("send_direction: %d", msg.direction);
-            // }
-            // else if (pressed1 == RIGHT1 && direction1 != LEFT1){
-            //     send_direction1 = pressed1;
-            //     msg.FLAG = MESSAGE;
-            //     msg.client_num=myClientNum;
-            //     msg.direction=send_direction1;
-            //     sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
-            //     gotoxy(90,37);
-            //     printf("send_direction: %d", msg.direction);
-            // }
-            msg.FLAG = MESSAGE;
-            msg.client_num=myClientNum;
-            msg.direction=pressed1;
-            // if(send_direction1==91)
-            //     send_direction1 = LEFT1;
-            sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
+            if(pressed1 == DOWN1 && direction1 != UP1){
+                msg.FLAG = MESSAGE;
+                msg.client_num=myClientNum;
+                msg.direction=pressed1;
+                sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
+            gotoxy(90,37);
+            printf("send_direction:DOWN ");    
+            }
+            else if (pressed1 == UP1 && direction1 != DOWN1){
+                msg.FLAG = MESSAGE;
+                msg.client_num=myClientNum;
+                msg.direction=pressed1;
+                sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
+            gotoxy(90,37);
+            printf("send_direction:UP   ");
+            }
+            else if (pressed1 == LEFT1 && direction1 != RIGHT1){
+                msg.FLAG = MESSAGE;
+                msg.client_num=myClientNum;
+                msg.direction=pressed1;
+                sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
+            gotoxy(90,37);
+            printf("send_direction:LEFT ");
+            }
+            else if (pressed1 == RIGHT1 && direction1 != LEFT1){
+                msg.FLAG = MESSAGE;
+                msg.client_num=myClientNum;
+                msg.direction=pressed1;
+                sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
+            gotoxy(90,37);
+            printf("send_direction:RIGHT");
+            }
+            // gotoxy(90,37);
+            // printf("send_direction: %d", msg.direction);
+            // msg.FLAG = MESSAGE;
+            // msg.client_num=myClientNum;
+            // msg.direction=pressed1;
+            // sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
             
         }
     }
@@ -589,17 +587,17 @@ int collisionDetection2(int snakeXY2[][SNAKE_ARRAY_SIZE], int snakeLength2) //Ne
 
 void refreshInfoBar1()
 {
-    gotoxy(20,37);
-    printf("Score1: %d", score1);
-    gotoxy(120,37);
-    printf("Speed1: %d", speed1);
-    return;
-    // gotoxy(10,37);
+    // gotoxy(20,37);
     // printf("Score1: %d", score1);
-    // gotoxy(30,37);
+    // gotoxy(120,37);
     // printf("Speed1: %d", speed1);
-    // gotoxy(70,37);
-    // printf("foodXY: %d %d", foodXY1[0],foodXY1[1]);
+    // return;
+    gotoxy(10,37);
+    printf("Score1: %d", score1);
+    gotoxy(30,37);
+    printf("Speed1: %d", speed1);
+    gotoxy(70,37);
+    printf("foodXY: %d %d", foodXY1[0],foodXY1[1]);
 
     return;
 }
@@ -650,7 +648,7 @@ void gameOverScreen()
     gotoxy(x,y++);
     printf(":.......::::::...:::::........::..:::::..::....::\n");
     sleep(1);
-    system("clear");
+    // system("clear");
     return;
 }
 
@@ -684,7 +682,7 @@ void loadEnviroment()//This can be done in a better way... FIX ME!!!! Also i thi
 }
 
 //Messy, need to clean this function up
-void startGame1( int snakeXY1[][SNAKE_ARRAY_SIZE], int foodXY1[], int foodXY2[], int snakeLength1, int direction1)
+void startGame1( int snakeXY1[][SNAKE_ARRAY_SIZE], int foodXY1[], int foodXY2[], int snakeLength1)
 {
     clock_t endWait1;
     int waittime1 = 180000;  //Sets the correct wait time according to the selected speed
@@ -695,17 +693,17 @@ void startGame1( int snakeXY1[][SNAKE_ARRAY_SIZE], int foodXY1[], int foodXY2[],
         checkKeysPressed1();
         if(canChangeDirection1){
             oldDirection1 = direction1;
-            // gotoxy(110,37);
-            // printf("recv_direction: %d", recv_direction1);
+            gotoxy(110,37);
+            printf("recv_direction: %d", recv_direction1);
             direction1 = recv_direction1;
-            // gotoxy(50,37);
-            // printf("direction1: %d", direction1);
+            gotoxy(50,37);
+            printf("direction1: %d", direction1);
         }   
         // if(oldDirection1 != direction1)//Temp fix to prevent the snake from colliding with itself
         //     canChangeDirection1 = 0;
         if(clock() >= endWait1){ //it moves according to how fast the computer running it is...
             move1(snakeXY1, snakeLength1, direction1);
-            // canChangeDirection1 = 1;
+            canChangeDirection1 = 1;
             if(eatFood1(snakeXY1, foodXY1,direction1)){
                 generateFood1(foodXY1,snakeXY1, snakeLength1); //Generate More Food
                 snakeLength1++;
@@ -740,11 +738,11 @@ void startGame1( int snakeXY1[][SNAKE_ARRAY_SIZE], int foodXY1[], int foodXY2[],
         msg.FLAG=QUIT;
         sendto(socketFD,&msg,sizeof(msg),0,(struct sockaddr*)&server_addr,saddrlen);
         // if(gameOver2==0){
-        loadEnviroment();
+        // loadEnviroment();
         //     gotoxy(foodXY2[0],foodXY2[1]);
         //     printf("x");
-        refreshInfoBar1();
-        printf("\n");
+        // refreshInfoBar1();
+        // printf("\n");
         //     refreshInfoBar2();
         // }
         break;
@@ -872,12 +870,12 @@ void loadGame1()
     loadEnviroment(); //borders
     prepairSnakeArray(snakeXY1, snakeLength1);
     loadSnake1(snakeXY1, snakeLength1);
-    foodXY1[0] = 100;
-    foodXY1[1] = 20;
-    gotoxy(foodXY1[0],foodXY1[1]);
-    printf("\033[33mx\033[m");
+        foodXY1[0] = 100;
+        foodXY1[1] = 20;
+        gotoxy(foodXY1[0],foodXY1[1]);
+        printf("\033[33mx\033[m");
     refreshInfoBar1(score1, speed1); //Bottom info bar. Score, Level etc
-    startGame1(snakeXY1, foodXY1, foodXY2, snakeLength1, direction1);
+    startGame1(snakeXY1, foodXY1, foodXY2, snakeLength1);
     return;
     // pthread_exit(NULL);
 }
